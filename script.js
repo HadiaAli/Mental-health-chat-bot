@@ -15,3 +15,17 @@ const createChatLi = (message, className) => {
     chatLi.querySelector("p").textContent = message;
     return chatLi; 
 }
+
+
+const handleChat = () => {
+    userMessage = chatInput.value.trim(); 
+    if(!userMessage) return;
+
+    chatInput.value = "";
+    chatInput.style.height = `${inputInitHeight}px`;
+
+    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+    
+}
+
+sendChatBtn.addEventListener("click", handleChat);
