@@ -17,15 +17,46 @@ const createChatLi = (message, className) => {
 }
 
 
+const generateResponse = (chatElement) => {
+    const API_URL = "https://api.openai.com/v1/chat/completions";
+    const messageElement = chatElement.querySelector("p");
+
+
+    
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{role: "user", content: userMessage}],
+        })
+    }
+
+
+    fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+        console.log(data); 
+        messageElement.textContent = data.choices[0].message.content.trim();
+    }).catch(() => {
+        messageElement.classList.add("error");
+        messageElement.textContent = "Oops! Something went wrong.";
+    })
+}
+
 const handleChat = () => {
     userMessage = chatInput.value.trim(); 
     if(!userMessage) return;
 
+    
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
 
+   
     chatbox.appendChild(createChatLi(userMessage, "outgoing"));
     
 }
+
 
 sendChatBtn.addEventListener("click", handleChat);
