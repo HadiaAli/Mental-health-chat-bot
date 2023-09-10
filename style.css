@@ -26,7 +26,7 @@ body {
     transition: all 0.1s ease;
   }
 
-.chatbot heade {
+.chatbot header {
     padding: 16px 0;
     position: relative;
     text-align: center;
